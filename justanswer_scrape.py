@@ -60,15 +60,16 @@ def scrape(url:str, filename: str):
   params={
       'api_key': 'd02ca450-7b42-4789-8528-ecf96ea1a150',
       'url': url, 
-      'residential': 'true', 
+      'residential': 'true',
+      'country': 'us', 
   },
 )
 
   soup = BeautifulSoup(response.content, 'html.parser')
-  data_q = soup.find_all('div', {'class': "qaDetailsContent"})
-  data_a = soup.find_all('div', {'class': "small-12 columns qaDetailsContent"})
+  data_conversation = soup.find_all('div', {'class': ["QNAThreadItemDescriptionCustomer", "QNAThreadItemDescriptionExpert"]})
+  data_question = soup.find_all('div', {'class': ['qnaBoxTitle', 'qnaBoxFirstChat']})
   
-  rows.append([data_q, data_a])
+  rows.append([data_question, data_conversation])
 
   #Wrtie to .csv
   file_exists = os.path.isfile(filename)
@@ -83,33 +84,10 @@ def scrape(url:str, filename: str):
 
 
 #__Main__
-url = "https://www.justanswer.com/real-estate-law/n9m6g-believe-need-real-estate-attorney-live.html"
-
-response = requests.get(
-  url='https://proxy.scrapeops.io/v1/',
-  params={
-      'api_key': 'd02ca450-7b42-4789-8528-ecf96ea1a150',
-      'url': url, 
-      'residential': 'true',
-      'country': 'us', 
-  },
-)
-
-soup = BeautifulSoup(response.content, 'html.parser')
-data_conversation = soup.find_all('div', {'class': ["QNAThreadItemDescriptionCustomer", "QNAThreadItemDescriptionExpert"]})
-data_question = soup.find_all('div', {'class': ['qnaBoxTitle', 'qnaBoxFirstChat']})
-
-print('QUESTION')
-print(data_question)
-print("ANSWER + Convo")
-print(data_conversation)
-
-
-'''
 all_urls = directory_to_cleaned_list("lawyers_rawData")
 for url in all_urls:
-  scrape(url, 'scraped_lawyer.csv')
-'''
+  scrape(url, 'scraped_justanswer.csv')
+
 
 
 
