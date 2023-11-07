@@ -36,7 +36,7 @@ def directory_to_cleaned_list(dir:str):
 
     all_urls = df['Unnamed: 1'].tolist()
     all_urls = all_urls[1:]
-    question_urls = file_lookup(all_urls, "https://www.lawyers.com/ask-a-lawyer/real-estate")
+    question_urls = file_lookup(all_urls, "https://www.justanswer.com/real-estate-law")
   
   #Drop duplicate URLs in cleaned list
   unique_URLs = []
@@ -84,7 +84,7 @@ def scrape(url:str, filename: str):
 
 
 #__Main__
-all_urls = directory_to_cleaned_list("lawyers_rawData")
+all_urls = directory_to_cleaned_list("justAnswer_rawURLs")
 for url in all_urls:
   scrape(url, 'scraped_justanswer.csv')
 
